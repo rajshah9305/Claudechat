@@ -1,0 +1,58 @@
+"use client";
+
+import { useEffect, useRef, useState } from 'react';
+import { useParams } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
+
+import { Button } from '@/components/ui/button';
+import { ResizablePanel } from '@/components/ui/resizable';
+import { Separator } from '@/components/ui/separator';
+import { ChatHeader } from '@/components/chat/chat-header';
+import { ChatSidebar } from '@/components/chat/chat-sidebar';
+import { ChatInput } from '@/components/chat/chat-input';
+import { ChatMessages } from '@/components/chat/chat-messages';
+import { ModelSelector } from '@/components/model-selector';
+import { AssistantSelector } from '@/components/assistant-selector';
+import { useChatStore } from '@/store/chat-store';
+import { Message, ModelType } from '@/types/chat';
+import { useChat } from '@/hooks/use-chat';
+
+export default function ChatPage() {
+  const params = useParams<{ id: string }>();
+  const chatId = params.id;
+
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+  
+  // State for the current chat
+  const [selectedModel, setSelectedModel] = useState<ModelType>('gpt-4o-mini');
+  const [selectedAssistant, setSelectedAssistant] = useState('default');
+  
+  // Get chat messages from store
+  const { messages, setMessages, addMessage, isProcessing, setIsProcessing } = useChatStore();
+  
+  // Use our custom chat hook
+  const { sendMessage, loading } = useChat({
+    chatId,
+    model: selectedModel,
+    assistant: selectedAssistant,
+    onStart: () => setIsProcessing(true),
+    onFinish: () => setIsProcessing(false),
+  });
+
+  // Handle sending a message
+  const handleSendMessage = async (content: string) => {
+    if (!content.trim()) return;
+    
+    // Add user message immediately
+    const userMessage: Message = {
+      id: `user-${Date.now()}`,
+      role: 'user',
+      content,
+      createdAt: new Date(),
+    };
+    
+    addMessage(userMessage);
+
+    // Send to the AI service and get response
+    await sendMessage(content);

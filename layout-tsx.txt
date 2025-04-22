@@ -1,0 +1,40 @@
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
+import { ThemeProvider } from '@/providers/theme-provider';
+import { Toaster } from '@/components/ui/toaster';
+import { Analytics } from '@/components/analytics';
+
+const inter = Inter({ subsets: ['latin'] });
+
+export const metadata: Metadata = {
+  title: 'Elegant AI Chat',
+  description: 'A beautiful AI chat interface with Claude-style UI',
+  icons: {
+    icon: '/favicon.ico',
+  },
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="rose-bg" aria-hidden="true" />
+          {children}
+          <Toaster />
+          <Analytics />
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}

@@ -1,0 +1,6 @@
+"use client";
+
+// This is a placeholder for future analytics integration
+export function Analytics() {
+  return null;
+}

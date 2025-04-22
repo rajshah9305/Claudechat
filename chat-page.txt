@@ -1,0 +1,25 @@
+"use client";
+
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { v4 as uuidv4 } from 'uuid';
+
+// This is just a redirect page to a new chat ID
+export default function ChatPage() {
+  const router = useRouter();
+
+  useEffect(() => {
+    // Generate a new chat ID and redirect to it
+    const chatId = uuidv4();
+    router.push(`/chat/${chatId}`);
+  }, [router]);
+
+  return (
+    <div className="h-screen w-full flex items-center justify-center">
+      <div className="animate-pulse flex flex-col items-center">
+        <div className="w-10 h-10 rounded-full bg-rose-500 animate-pulse-glow"></div>
+        <p className="mt-4 text-muted-foreground">Creating new chat...</p>
+      </div>
+    </div>
+  );
+}
