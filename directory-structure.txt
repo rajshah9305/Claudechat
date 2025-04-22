@@ -1,0 +1,44 @@
+claude-chat/
+├── src/
+│   ├── app/
+│   │   ├── api/
+│   │   │   └── trpc/
+│   │   │       └── [trpc]/
+│   │   │           └── route.ts
+│   │   ├── chat/
+│   │   │   └── page.tsx
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── components/
+│   │   ├── chat/
+│   │   │   ├── chat-interface.tsx
+│   │   │   ├── message-item.tsx
+│   │   │   └── model-selector.tsx
+│   │   ├── ui/
+│   │   │   ├── button.tsx
+│   │   │   ├── input.tsx
+│   │   │   └── ... (other UI components)
+│   │   └── layout/
+│   │       ├── header.tsx
+│   │       └── sidebar.tsx
+│   ├── server/
+│   │   ├── api/
+│   │   │   └── root.ts
+│   │   ├── db.ts
+│   │   └── trpc.ts
+│   ├── lib/
+│   │   ├── utils.ts
+│   │   └── constants.ts
+│   └── types/
+│       └── index.ts
+├── public/
+│   └── background.jpg
+├── prisma/
+│   └── schema.prisma
+├── .env
+├── .env.example
+├── .gitignore
+├── package.json
+├── next.config.js
+├── tailwind.config.ts
+└── tsconfig.json
